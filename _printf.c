@@ -1,5 +1,14 @@
 #include "main.h"
 
+/**
+ * _printf - function that creates a new printf
+ *
+ *  @format: the format specifier such as char, string, int
+ *
+ * Return: NULL or any other function
+ *
+ */
+
 int _printf(const char *format, ...)
 {
 	va_list args;
@@ -27,5 +36,5 @@ int _printf(const char *format, ...)
 	}
 
 	va_end(args);
-	return count;
+	return (count);
 }

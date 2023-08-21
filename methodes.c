@@ -21,7 +21,7 @@ void printChar(char c, int *count)
 void printStr(char *str, int *count)
 {
 	while (*str)
-		printChar(*str++, count);
+	printChar(*str++, count);
 }
 /**
  * printInt - Prints an integer and updates the character count.
@@ -30,22 +30,21 @@ void printStr(char *str, int *count)
  * @count: Pointer to the character count.
  * Return: Void
  */
-void printInt(int num, int *count) 
+void printInt(int num, int *count)
 {
-    if (num < 0)
-    {
-        printChar('-', count);
-        num = -1 * num;
-    }
-    if (num == 0)
-        printChar('0', count);
-    else if (num >= 10)
-    {
-        printInt(num / 10, count);
-        printChar('0' + (num % 10), count);
-    }
-    else
-        printChar('0' + num, count);
+	if (num < 0)
+	{
+	printChar('-', count);
+	num = -1 * num;
+	}
+	if (num == 0)
+		printChar('0', count);
+
+	else if (num >= 10)
+	{
+		printInt(num / 10, count);
+		printChar('0' + (num % 10), count);
+	}
+	else
+	printChar('0' + num, count);
 }
-
-
