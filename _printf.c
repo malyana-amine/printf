@@ -1,10 +1,10 @@
 #include <stdarg.h>
-#include "main.h"
 #include <unistd.h>
+#include "main.h"
 
 /**
-  * findFunction - this function will find the that the right format
-  * @format: iformat specifier
+  * findFunction - this function will find the that the right formats
+  * @format: format specifier
   * Return: NULL or any other function
   */
 int (*findFunction(const char *format))(va_list)
@@ -14,6 +14,8 @@ int (*findFunction(const char *format))(va_list)
 		{"c", printChar},
 		{"s", printString},
 		{"i", printInt},
+		{"d", printDec},
+		{"b", printBin},
 		{NULL, NULL}
 	};
 
@@ -27,7 +29,7 @@ int (*findFunction(const char *format))(va_list)
 }
 
 /**
-  * _printf - Recreation of printf
+  * _printf - Recreation of printf fucntion
   * @format: format specifier char, string, int
   * Return: the string size
   */
@@ -37,10 +39,9 @@ int _printf(const char *format, ...)
 	int (*f)(va_list);
 	unsigned int x = 0, count = 0;
 
-	va_start(args, format);
-
 	if (format == NULL)
 		return (-1);
+	va_start(args, format);
 	while (format[x])
 	{
 		while (format[x] != '%' && format[x])
