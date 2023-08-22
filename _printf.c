@@ -1,40 +1,72 @@
+#include <stdarg.h>
 #include "main.h"
+#include <unistd.h>
 
 /**
- * _printf - function that creates a new printf
- *
- *  @format: the format specifier such as char, string, int
- *
- * Return: NULL or any other function
- *
- */
+  * findFunction - this function will find the that the right format
+  * @format: iformat specifier
+  * Return: NULL or any other function
+  */
+int (*findFunction(const char *format))(va_list)
+{
+	unsigned int y = 0;
+	codes findfun[] = {
+		{"c", printChar},
+		{"s", printString},
+		{"i", printInt},
+		{NULL, NULL}
+	};
 
+	while (findfun[y].tn)
+	{
+		if (findfun[y].tn[0] == (*format))
+			return (findfun[y].f);
+		y++;
+	}
+	return (NULL);
+}
+
+/**
+  * _printf - Recreation of printf
+  * @format: format specifier char, string, int
+  * Return: the string size
+  */
 int _printf(const char *format, ...)
 {
 	va_list args;
-	int count = 0;
+	int (*f)(va_list);
+	unsigned int x = 0, count = 0;
 
 	va_start(args, format);
 
-	while (*format)
+	if (format == NULL)
+		return (-1);
+	while (format[x])
 	{
-		if (*format == '%')
+		while (format[x] != '%' && format[x])
 		{
-			format++;
-			if (*format == 'c')
-				printChar(va_arg(args, int), &count);
-			else if (*format == 's')
-				printStr(va_arg(args, char*), &count);
-			else if (*format == 'd' || *format == 'i')
-				printInt(va_arg(args, int), &count);
-			else if (*format == '%')
-				printChar('%', &count);
+			_putchar(format[x]);
+			count++;
+			x++;
 		}
+		if (format[x] == '\0')
+			return (count);
+		f = findFunction(&format[x + 1]);
+		if (f != NULL)
+		{
+			count += f(args);
+			x += 2;
+			continue;
+		}
+		if (!format[x + 1])
+			return (-1);
+		_putchar(format[x]);
+		count++;
+		if (format[x + 1] == '%')
+			x += 2;
 		else
-			printChar(*format, &count);
-		format++;
+			x++;
 	}
-
 	va_end(args);
 	return (count);
 }
