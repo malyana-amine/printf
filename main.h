@@ -14,8 +14,8 @@ char *tn;
 int (*f)(va_list);
 } codes;
 
-int printChar(va_list c);
 int printInt(va_list i);
+int printChar(va_list c);
 int _putchar(char c);
 int printDec(va_list d);
 int printString(va_list s);
